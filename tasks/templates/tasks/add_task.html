@@ -1,0 +1,16 @@
+{% extends 'tasks/base.html' %}
+{% load static %}
+
+{% block title %}Добавить задачу - Task Manager{% endblock %}
+
+{% block content %}
+    <div class="addtask-container">
+        <h1>Добавить задачу</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Добавить Задачу</button>
+        </form>
+        <a href="{% url 'home' %}" class="logout-btn">Назад</a>
+    </div>
+{% endblock %}

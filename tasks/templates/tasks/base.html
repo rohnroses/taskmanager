@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <a href="/" class="logo">TaskManager</a>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="#">{{ user.username }}</a></li>
+                        <li><a href="{% url 'logout' %}">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Войти</a></li>
+                        <li><a href="{% url 'register' %}">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Task Manager — все права защищены</p>
+    </footer>
+</body>
+</html>

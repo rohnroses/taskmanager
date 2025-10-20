@@ -1,0 +1,31 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Главная — Task Manager{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    {% if user.is_authenticated %}
+        <h2>Привет, {{ user.username }}!</h2>
+        <p>Добро пожаловать в твой Task Manager 🚀</p>
+        <a href="{% url 'add_task' %}" class="addtask-btn">Добавить Задачу</a>
+        <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
+        {% if tasks %}
+            <ul>
+                {% for task in tasks %}
+                <li class="task-detail">
+                    <strong>{{ task.title }}</strong> - {{ task.deadline|date:"d.m.Y H:i" }}
+                    <br>
+                    {{ task.description }}
+                    <a href="{% url 'task_delete' task.pk %}">Удалить задачу</a>
+                    <a href="">Редактировать задачу</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tasks</p>
+        {% endif %}    
+    {% else %}
+        <h2>Добро пожаловать в Task Manager</h2>
+    {% endif %}
+</div>
+{% endblock %}

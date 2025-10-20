@@ -1,0 +1,29 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}Регистрация — Task Manager{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Регистрация</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </p>
+        <p>
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </p>
+         <p>
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </p>
+        <p>
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </p>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}
