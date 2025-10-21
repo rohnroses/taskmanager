@@ -162,3 +162,107 @@ form button:hover,
     resize: vertical;
     min-height: 100px;
 }
+
+/* ====== СТИЛИ ДЛЯ СПИСКА ЗАДАЧ ====== */
+.tasks-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.task-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+}
+
+.task-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.task-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
+.task-description {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ====== КНОПКИ ДЕЙСТВИЙ ====== */
+.task-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.task-btn {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-edit {
+    background: #28a745;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+/* ====== ЗАГОЛОВОК СТРАНИЦЫ ====== */
+.tasks-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.tasks-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tasks-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* ====== ПУСТОЙ СПИСОК ====== */
+.empty-tasks {
+    text-align: center;
+    padding: 3rem;
+    color: white;
+}
+
+.empty-tasks h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}

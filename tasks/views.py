@@ -7,9 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 from .forms import RegisterForm, TaskForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import CreateView, ListView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import request
 
@@ -18,15 +18,13 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated, ]
 
-class TaskHome(ListView):
+class TaskHome(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks/home.html'
+    context_object_name = 'tasks'
 
     def get_queryset(self):
-        user = self.request.user
-        if user.is_authenticated:
-            return Task.objects.filter(user=user)
-        return Task.objects.none() 
+        return Task.objects.filter(user=self.request.user)
     
 def login_view(request):
     if request.method == 'POST':
@@ -40,18 +38,24 @@ def login_view(request):
 
     return render(request, 'tasks/login.html', {'form':form})
 
-@login_required      
-def add_task(request):
-    if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.user = request.user
-            task.save()
-            return redirect('home')
-    else:
-        form = TaskForm()
-    return render(request, 'tasks/add_task.html', {'form': form})              
+class AddTask(LoginRequiredMixin, CreateView):
+    form_class = TaskForm
+    template_name = 'tasks/add_task.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # связываем задачу с текущим пользователем
+        return super().form_valid(form)
+
+class TaskUpdate(LoginRequiredMixin, UpdateView):
+    model = Task
+    fields = ['title', 'description', 'status' , 'deadline']
+    template_name = 'tasks/task_update.html'
+    success_url = reverse_lazy('home')   
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task

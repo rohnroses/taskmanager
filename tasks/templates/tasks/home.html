@@ -1,31 +1,51 @@
 {% extends 'tasks/base.html' %}
 
-{% block title %}Главная — Task Manager{% endblock %}
-
 {% block content %}
-<div class="home-container">
-    {% if user.is_authenticated %}
-        <h2>Привет, {{ user.username }}!</h2>
-        <p>Добро пожаловать в твой Task Manager 🚀</p>
-        <a href="{% url 'add_task' %}" class="addtask-btn">Добавить Задачу</a>
-        <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
+<div class="main">
+    <div class="tasks-container">
+        <div class="tasks-header">
+            <h1>📝 Мои задачи</h1>
+            <p>Управляйте своими задачами эффективно</p>
+        </div>
+
         {% if tasks %}
-            <ul>
-                {% for task in tasks %}
-                <li class="task-detail">
-                    <strong>{{ task.title }}</strong> - {{ task.deadline|date:"d.m.Y H:i" }}
-                    <br>
+            {% for task in tasks %}
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">{{ task.title }}</h3>
+                    <span class="task-date">
+                        {% if task.due_date %}
+                        📅 {{ task.due_date|date:"d.m.Y" }}
+                        {% endif %}
+                    </span>
+                </div>
+                
+                {% if task.description %}
+                <div class="task-description">
                     {{ task.description }}
-                    <a href="{% url 'task_delete' task.pk %}">Удалить задачу</a>
-                    <a href="">Редактировать задачу</a>
-                </li>
-                {% endfor %}
-            </ul>
+                </div>
+                {% endif %}
+                
+                <!-- КНОПКИ ПОСЛЕ ОПИСАНИЯ ЗАДАЧИ -->
+                <div class="task-actions">
+                    <a href="{% url 'task_update' task.pk %}" class="task-btn btn-edit">
+                        ✏️ Редактировать
+                    </a>
+                    <a href="{% url 'task_delete' task.pk %}" class="task-btn btn-delete">
+                        🗑️ Удалить
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
         {% else %}
-            <p>No tasks</p>
-        {% endif %}    
-    {% else %}
-        <h2>Добро пожаловать в Task Manager</h2>
-    {% endif %}
+            <div class="empty-tasks">
+                <h3>🎉 Пока нет задач!</h3>
+                <p>Создайте свою первую задачу</p>
+                <a href="{% url 'add-task' %}" class="addtask-btn" style="display: inline-block; margin-top: 1rem;">
+                    ➕ Добавить задачу
+                </a>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

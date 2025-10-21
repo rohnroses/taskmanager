@@ -1,0 +1,14 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="task-update">
+    <h2>Редактировать задачу</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+        <button href="{% url 'home'%}" class="btn btn-secondary">Отмена</button>
+    </form>
+</div>
+{% endblock %}

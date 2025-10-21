@@ -128,3 +128,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
